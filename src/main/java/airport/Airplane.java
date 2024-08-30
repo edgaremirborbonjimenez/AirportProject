@@ -3,7 +3,10 @@ package airport;
 import people.Passenger;
 import people.Pilot;
 import people.Stewardess;
+import utils.customLinkedList.CustomLinkedList;
+import utils.customLinkedList.Node;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -11,12 +14,12 @@ import java.util.Objects;
 public class Airplane {
     private String id;
     private Flight flight;
-    private List<Seat> seats;
-    private List<Stewardess> steward;
-    private List<Pilot> pilots;
+    private CustomLinkedList<Seat> seats;
+    private Collection<Stewardess> steward;
+    private Collection<Pilot> pilots;
 
     public Airplane() {
-        this.seats = new LinkedList<>();
+        this.seats = new CustomLinkedList<>();
         this.steward = new LinkedList<>();
         this.pilots = new LinkedList<>();
     }
@@ -36,15 +39,15 @@ public class Airplane {
         this.flight = flight;
     }
 
-    public List<Seat> getSeats() {
+    public CustomLinkedList<Seat> getSeats() {
         return seats;
     }
 
-    public void setSeats(List<Seat> seats) {
+    public void setSeats(CustomLinkedList<Seat> seats) {
         this.seats = seats;
     }
 
-    public List<Stewardess> getStewardess() {
+    public Collection<Stewardess> getStewardess() {
         return steward;
     }
 
@@ -52,7 +55,7 @@ public class Airplane {
         this.steward = steward;
     }
 
-    public List<Pilot> getPilots() {
+    public Collection<Pilot> getPilots() {
         return pilots;
     }
 
@@ -61,13 +64,19 @@ public class Airplane {
     }
 
     public Seat asignSeat(Passenger passenger, int number){
-        for(Seat seat : seats){
-            if(seat.getNumber()==number){
-                seat.setPassenger(passenger);
-                return seat;
-            }
+        if (seats.getHead()==null){
+            return null;
         }
-        return null;
+        Node<Seat> seat = seats.getHead();
+        do{
+            if(seat.getData().getNumber()==number){
+                seat.getData().setPassenger(passenger);
+                return seat.getData();
+            }else{
+                seat = seat.getNext();
+            }
+        }while (seat.getNext() != null);
+            return null;
     }
 
     @Override

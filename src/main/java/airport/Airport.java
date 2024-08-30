@@ -1,17 +1,18 @@
 package airport;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public class Airport {
-    LinkedList<Airplane> airplanes;
+    Collection<Airplane> airplanes;
 
     public Airport() {
         this.airplanes = new LinkedList<>();
     }
 
-    public LinkedList<Airplane> getAirplanes() {
+    public Collection<Airplane> getAirplanes() {
         return airplanes;
     }
 

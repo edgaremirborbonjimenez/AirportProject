@@ -1,11 +1,12 @@
 package people;
 
 import airport.Airplane;
+import interfaces.IPassenger;
 
 import java.util.Date;
 import java.util.Objects;
 
-public class Pilot extends AirplaneCrew {
+public class Pilot extends AirplaneCrew implements IPassenger {
 
     String range;
 
@@ -47,5 +48,10 @@ public class Pilot extends AirplaneCrew {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), range);
+    }
+
+    @Override
+    public void saySomething() {
+        System.out.println("We are going to start the flight please stay sit");
     }
 }

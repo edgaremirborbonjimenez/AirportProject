@@ -91,8 +91,8 @@ public class Menu {
         airport.addAirplane(airplane5);
         airport.addAirplane(airplane6);
         airport.addAirplane(airplane7);
-        //airportDAO.setAirport(airport);
-        //airportDAO.setCities(cities);
+        airportDAO.setAirport(airport);
+        airportDAO.setCities(cities);
         logger.info("Data started");
 
     }

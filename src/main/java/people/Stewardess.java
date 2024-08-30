@@ -1,12 +1,13 @@
 package people;
 
 import airport.Airplane;
+import interfaces.IPassenger;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
-public class Stewardess extends AirplaneCrew {
+public class Stewardess extends AirplaneCrew implements IPassenger {
 
     String[] personalStrengths;
 
@@ -49,5 +50,10 @@ public class Stewardess extends AirplaneCrew {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), Arrays.hashCode(personalStrengths));
+    }
+
+    @Override
+    public void saySomething() {
+        System.out.println("Please stay sit, if you need help just ask me");
     }
 }
