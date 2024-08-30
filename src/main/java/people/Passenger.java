@@ -2,13 +2,14 @@ package people;
 
 import airport.Ticket;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 public class Passenger extends Person {
 
     private String passportCode;
-    private List<Ticket> ticket;
+    private Collection<Ticket> ticket;
 
     public Passenger(){}
 
@@ -19,11 +20,11 @@ public class Passenger extends Person {
     public void setPassportCode(String passportCode) {
         this.passportCode = passportCode;
     }
-    public List<Ticket> getTicket() {
+    public Collection<Ticket> getTicket() {
         return ticket;
     }
 
-    public void setTicket(List<Ticket> ticket) {
+    public void setTicket(Collection<Ticket> ticket) {
         this.ticket = ticket;
     }
 

@@ -4,12 +4,13 @@ import airport.Airplane;
 import interfaces.IPassenger;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
 public class Stewardess extends AirplaneCrew implements IPassenger {
 
-    String[] personalStrengths;
+    Collection personalStrengths;
 
 
     public Stewardess(){}
@@ -19,22 +20,22 @@ public class Stewardess extends AirplaneCrew implements IPassenger {
         System.out.println("There is any help you need?");
     }
 
-    public Stewardess(String firstName, String lastName, Date birthDate, Date dateStartedWorking,String[] personalStrengths, Airplane airplane){
+    public Stewardess(String firstName, String lastName, Date birthDate, Date dateStartedWorking,Collection personalStrengths, Airplane airplane){
         super(firstName, lastName, birthDate, dateStartedWorking,airplane);
         this.personalStrengths = personalStrengths;
     }
-    public String[] getPersonalStrengths() {
+    public Collection getPersonalStrengths() {
         return personalStrengths;
     }
 
-    public void setPersonalStrengths(String[] personalStrengths) {
+    public void setPersonalStrengths(Collection personalStrengths) {
         this.personalStrengths = personalStrengths;
     }
 
     @Override
     public String toString() {
         return "Stewardess{" +
-                "personalStrengths=" + Arrays.toString(personalStrengths) +
+                "personalStrengths=" + personalStrengths.toString() +
                 '}';
     }
 
@@ -49,7 +50,7 @@ public class Stewardess extends AirplaneCrew implements IPassenger {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), Arrays.hashCode(personalStrengths));
+        return Objects.hash(super.hashCode(), personalStrengths);
     }
 
     @Override

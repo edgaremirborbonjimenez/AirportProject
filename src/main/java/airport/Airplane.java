@@ -6,10 +6,7 @@ import people.Stewardess;
 import utils.customLinkedList.CustomLinkedList;
 import utils.customLinkedList.Node;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Airplane {
     private String id;
@@ -21,7 +18,7 @@ public class Airplane {
     public Airplane() {
         this.seats = new CustomLinkedList<>();
         this.steward = new LinkedList<>();
-        this.pilots = new LinkedList<>();
+        this.pilots = new ArrayList<>();
     }
 
     public String getId() {
