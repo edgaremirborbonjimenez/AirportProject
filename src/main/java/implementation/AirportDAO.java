@@ -8,67 +8,33 @@ import exception.AirportException;
 import interfaces.IAirportDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.Model;
 
 import java.util.List;
+//private static final Logger logger = LogManager.getLogger("Airport");
 
 public class AirportDAO implements IAirportDAO {
-private static final Logger logger = LogManager.getLogger("Airport");
 
-    private static AirportDAO airportDAO;
-    private static Airport airport;
+    private static IAirportDAO airportDAO;
     private static final int numRec = 0;
     private static final int count = 4;
-    private static List<City> cities;
+    private static Model model;
 
-        private AirportDAO(){
-        }
-
-        public static AirportDAO getAirportDAOInstance(){
-            if(airportDAO==null){
-                airportDAO = new AirportDAO();
-            }
-            return airportDAO;
-        }
-
-        @Override
-        public List<List<Flight>> getRoute(City leaving,City goingTo)throws AirportException {
-            if(airport == null){
-                logger.error("There is No Airport Available");
-                throw new AirportException("There is No Airport Available");
-            }
-            return airport.getRoute(leaving,goingTo,count,numRec);
-        }
-
-        @Override
-        public Airplane addAirplane(Airplane airplane) {
-            return airport.addAirplane(airplane);
-        }
-
-    @Override
-    public double getRoutePrice(List<Flight> flights)throws AirportException {
-            if (flights == null || flights.size() == 0) {
-                logger.error("There is No Flight Available");
-                throw new AirportException("There is No Flight Available");
-            }
-        return airport.getRoutePrice(flights);
+    private AirportDAO() {
+        model = Model.getInstance();
     }
 
-    @Override
-    public List<City> getCities()throws AirportException {
-            if(cities==null||cities.size()==0){
-                logger.error("There is No City Available");
-                throw new AirportException("There is No City Available");
-            }
-        return cities;
+    public static IAirportDAO getInstance() {
+        if (airportDAO == null) {
+            airportDAO = new AirportDAO();
+        }
+        return airportDAO;
     }
 
-    @Override
-    public void setAirport(Airport airport){
-            this.airport = airport;
-    }
 
     @Override
-    public void setCities(List<City> cities){
-            this.cities = cities;
+    public void setAirport(Airport airport) {
+        model.setAirport(airport);
     }
+
 }

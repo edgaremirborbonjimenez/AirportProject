@@ -21,9 +21,9 @@ public class Airport {
     }
 
     public Airplane addAirplane(Airplane airplane) {
-        if(airplanes.add(airplane)){
+        if (airplanes.add(airplane)) {
             return airplane;
-        }else{
+        } else {
             return null;
         }
     }
@@ -37,56 +37,57 @@ public class Airport {
         return null;
     }
 
-    public List<List<Flight>> getRoute(City leaving,City goingTo,int count,int numRec){
+    public List<List<Flight>> getRoute(City leaving,City goingTo,int count,int numRec) {
         List<List<Flight>> routes = new LinkedList<>();
         List<Flight> routesStops = new LinkedList<>();
 
-//        if(count==0){
-//            return new LinkedList<>();
-//        }
 
         for (Airplane airplane : airplanes) {
-            if(numRec==0){
+            if (numRec == 0) {
                 routesStops = new LinkedList<>();
             }
-//            System.out.println("We are leaving: "+leaving.getName());
-//            System.out.println("Airplane leaves: "+airplane.getFlight().getLeaving().getName()+"- Arrives: "+airplane.getFlight().getGoingTo().getName()+"\n");
 
-            //if(airplane.getFlight().getLeaving().getName().equalsIgnoreCase(leaving.getName())){
-                if(airplane.getFlight().getLeaving().equals(leaving)){
+            if (airplane.getFlight().getLeaving().equals(leaving)) {
 
-                //if(airplane.getFlight().getGoingTo().getName().equalsIgnoreCase(goingTo.getName())){
-                    if(airplane.getFlight().getGoingTo().equals(goingTo)){
+                if (airplane.getFlight().getGoingTo().equals(goingTo)) {
                     routesStops.add(airplane.getFlight());
                     routes.add(routesStops);
                     return routes;
-                }else{
+                } else {
                     List<List<Flight>> returned = getRoute(airplane.getFlight().getGoingTo(), goingTo,--count,++numRec);
                     numRec--;
-                      if(!returned.isEmpty()){
-                        for(List<Flight> route : returned){
+                    if (!returned.isEmpty()) {
+                        for (List<Flight> route : returned) {
                             routesStops.addAll(route);
-                        routesStops.add(airplane.getFlight());
-                        routes.add(routesStops);
-                        if(numRec!=0){
-                            return routes;
+                            routesStops.add(airplane.getFlight());
+                            routes.add(routesStops);
+                            if (numRec != 0) {
+                                return routes;
+                            }
                         }
-                        }
-                      }else{
-                      return routes;
-                      }
+                    } else {
+                        return routes;
+                    }
                 }
             }
         }
         return routes;
     }
 
-    public double getRoutePrice(List<Flight> flights){
+    public double getRoutePrice(List<Flight> flights) {
         double price = 0;
-        for(Flight flight : flights){
+        for (Flight flight : flights) {
             price += flight.getPrice();
         }
         return price;
+    }
+
+    public List<Flight> getAllFlights() {
+        List<Flight> flights = new LinkedList<>();
+        for (Airplane airplane : airplanes) {
+            flights.add(airplane.getFlight());
+        }
+        return flights;
     }
 
     @Override
@@ -109,3 +110,4 @@ public class Airport {
         return Objects.hashCode(airplanes);
     }
 }
+

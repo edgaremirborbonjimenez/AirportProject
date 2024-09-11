@@ -6,7 +6,9 @@ public class Ticket {
     private Flight flight;
     private Seat seat;
 
-    public Ticket() {}
+    public Ticket() {
+
+    }
 
     public Ticket(Flight flight,Seat seat) {
         this.flight = flight;

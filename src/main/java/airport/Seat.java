@@ -11,7 +11,9 @@ public class Seat {
     private TypeSeat typeSeat;
     private  int number;
 
-    public Seat() {}
+    public Seat() {
+
+    }
 
     public Seat(Passenger passenger, boolean isSpecial) {
         this.passenger = passenger;

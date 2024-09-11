@@ -8,7 +8,9 @@ public class Person {
     protected String lastName;
     protected Date birthDate;
 
-    public Person(){}
+    public Person() {
+
+    }
 
     public Person(String firstName, String lastName, Date birthDate) {
         this.firstName = firstName;

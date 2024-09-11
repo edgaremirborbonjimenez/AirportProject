@@ -10,7 +10,9 @@ public class Pilot extends AirplaneCrew implements IPassenger {
 
     String range;
 
-    public Pilot() {}
+    public Pilot() {
+
+    }
 
     @Override
     public void anounceMessage() {

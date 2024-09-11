@@ -9,7 +9,9 @@ public abstract class AirplaneCrew extends Person {
     protected int amountOfTripsDone;
     protected Airplane airplane;
 
-    public AirplaneCrew(){}
+    public AirplaneCrew() {
+
+    }
 
     public AirplaneCrew(String firstName, String lastName, Date birthDate, Date dateStartedWorking,Airplane airplane) {
         super(firstName,lastName,birthDate);
@@ -32,7 +34,7 @@ public abstract class AirplaneCrew extends Person {
         this.amountOfTripsDone = amountOfTripsDone;
     }
 
-    public void addOneMoreTrip(){
+    public void addOneMoreTrip() {
         this.amountOfTripsDone++;
     }
 

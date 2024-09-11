@@ -11,7 +11,9 @@ public class Flight {
     private Date dateArrival;
     private Airplane airplane;
 
-    public Flight() {}
+    public Flight() {
+
+    }
 
     public Flight(City leaving, City goingTo, double price, Date dateLeaving, Date dateArrival,Airplane airplane) {
         this.leaving = leaving;
