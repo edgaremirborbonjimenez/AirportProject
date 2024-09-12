@@ -1,42 +1,41 @@
 package airport;
 
+import utils.ECity;
+
 import java.util.Objects;
 
 public class City {
-    private String name;
+    private ECity city;
 
     public City() {
 
     }
-    public City(String name) {
-        this.name = name;
+    public City(ECity city) {
+        this.city = city;
     }
 
     public String getName() {
-        return name;
+        return city.getName();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return Objects.equals(name, city.name);
+        return Objects.equals(this.city.getName(), city.city.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(city.getName());
     }
 
     @Override
     public String toString() {
         return "City{" +
-                "name='" + name + '\'' +
+                "name='" + city.getName() + '\'' +
                 '}';
     }
 }

@@ -59,7 +59,6 @@ public class Passenger extends Person {
     public String toString() {
         return "Passenger{" +
                 "passportCode='" + passportCode + '\'' +
-                ", ticket=" + ticket +
                 '}';
     }
 

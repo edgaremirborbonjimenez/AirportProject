@@ -1,10 +1,13 @@
 package utils;
 
 import airport.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import people.Passenger;
 import utils.customLinkedList.CustomLinkedList;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class Model {
     Airport airport;
     List<City> cities;
     static Model model;
-    // private static final Logger logger = LogManager.getLogger("Airport");
+    private static final Logger logger = LogManager.getLogger("Airport");
 
 
     private Model() {
@@ -65,24 +68,19 @@ public class Model {
         airport = new Airport();
         passenger = new Passenger();
 
-        City city = new City();
-        city.setName("Mexico");
-        City city2 = new City();
-        city2.setName("USA");
-        City city3 = new City();
-        city3.setName("Brasil");
-        City city4 = new City();
-        city4.setName("Guatemala");
-        City city5 = new City();
-        city5.setName("España");
-        City city6 = new City();
-        city6.setName("Roma");
+        City city = new City(ECity.MEXICO);
+        City city2 = new City(ECity.USA);
+        City city3 = new City(ECity.BRASIL);
+        City city4 = new City(ECity.GUATEMALA);
+        City city5 = new City(ECity.SPAIN);
+        City city6 = new City(ECity.ROME);
         cities.add(city);
         cities.add(city2);
         cities.add(city3);
         cities.add(city4);
         cities.add(city5);
         cities.add(city6);
+
         Flight flight1 = new Flight();
         flight1.setLeaving(city);
         flight1.setGoingTo(city2);
@@ -102,47 +100,62 @@ public class Model {
         Flight flight5 = new Flight();
         flight5.setLeaving(city);
         flight5.setGoingTo(city3);
-        flight5.setPrice(20.99);
+        flight5.setPrice(19.99);
         Flight flight6 = new Flight();
         flight6.setLeaving(city);
         flight6.setGoingTo(city6);
         flight6.setPrice(40.99);
-        CustomLinkedList<Seat> seats = new CustomLinkedList<>();
-        for (int i = 0; i < 10;i++) {
-            Seat s = new Seat();
-            s.setNumber(i);
-            s.setSpecial(false);
-            s.setTypeSeat(TypeSeat.GENERAL);
-            seats.insert(s);
+
+
+        List<Flight> flights = new ArrayList<>(Arrays.asList(flight1, flight2, flight3, flight4, flight5,flight6));
+
+        for(Flight f:flights) {
+            CustomLinkedList<Seat> seats = new CustomLinkedList<>();
+            for (int i = 0; i < 10;i++) {
+                Seat s = new Seat();
+                s.setNumber(i+1);
+                s.setSpecial(false);
+                s.setTypeSeat(TypeSeat.GENERAL);
+                seats.insert(s);
         }
+            f.setSeats(seats);
+        }
+
+//        for (int i = 0; i < 10;i++) {
+//            Seat s = new Seat();
+//            s.setNumber(i);
+//            s.setSpecial(false);
+//            s.setTypeSeat(TypeSeat.GENERAL);
+//            seats.insert(s);
+//        }
+
         Airplane airplane1 = new Airplane();
         flight1.setAirplane(airplane1);
         airplane1.setFlight(flight1);
-        airplane1.setSeats(seats);
+        //airplane1.setSeats(seats);
         Airplane airplane2 = new Airplane();
         flight2.setAirplane(airplane2);
         airplane2.setFlight(flight2);
-        airplane2.setSeats(seats);
+        //airplane2.setSeats(seats);
         Airplane airplane3 = new Airplane();
         flight3.setAirplane(airplane3);
         airplane3.setFlight(flight3);
-        airplane3.setSeats(seats);
+        //airplane3.setSeats(seats);
         Airplane airplane5 = new Airplane();
         flight4.setAirplane(airplane5);
         airplane5.setFlight(flight4);
-        airplane5.setSeats(seats);
+       // airplane5.setSeats(seats);
         Airplane airplane6 = new Airplane();
         flight5.setAirplane(airplane6);
         airplane6.setFlight(flight5);
-        airplane6.setSeats(seats);
+        //airplane6.setSeats(seats);
         Airplane airplane7 = new Airplane();
         flight6.setAirplane(airplane7);
         airplane7.setFlight(flight6);
-        airplane7.setSeats(seats);
+        //airplane7.setSeats(seats);
         airport.addAirplane(airplane1);
         airport.addAirplane(airplane2);
         airport.addAirplane(airplane3);
-        //airport.addAirplane(airplane4);
         airport.addAirplane(airplane5);
         airport.addAirplane(airplane6);
         airport.addAirplane(airplane7);
@@ -150,7 +163,7 @@ public class Model {
         passenger.setFirstName("Edgar Emir");
         passenger.setLastName("Borbon Jimenez");
         passenger.setBirthDate(new Date());
-        passenger.setMoney(200);
-        //logger.info("Data started");
+        passenger.setMoney(2000);
+        logger.info("Data started");
     }
 }

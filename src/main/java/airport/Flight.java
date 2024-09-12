@@ -1,6 +1,11 @@
 package airport;
 
+import people.Passenger;
+import utils.customLinkedList.CustomLinkedList;
+import utils.customLinkedList.Node;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class Flight {
@@ -10,18 +15,20 @@ public class Flight {
     private Date dateLeaving;
     private Date dateArrival;
     private Airplane airplane;
+    private CustomLinkedList<Seat> seats;
 
     public Flight() {
 
     }
 
-    public Flight(City leaving, City goingTo, double price, Date dateLeaving, Date dateArrival,Airplane airplane) {
+    public Flight(City leaving, City goingTo, double price, Date dateLeaving, Date dateArrival,Airplane airplane, CustomLinkedList<Seat> seats) {
         this.leaving = leaving;
         this.goingTo = goingTo;
         this.price = price;
         this.dateLeaving = dateLeaving;
         this.dateArrival = dateArrival;
         this.airplane = airplane;
+        this.seats = seats;
     }
 
     public City getLeaving() {
@@ -70,6 +77,34 @@ public class Flight {
 
     public void setAirplane(Airplane airplane) {
         this.airplane = airplane;
+    }
+
+    public CustomLinkedList<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(CustomLinkedList<Seat> seats) {
+        this.seats = seats;
+    }
+
+        public Seat asignSeat(Passenger passenger, int number) {
+        if (seats.getHead() == null) {
+            return null;
+        }
+        Node<Seat> seat = seats.getHead();
+        do {
+            if (seat.getData().getNumber() == number) {
+                seat.getData().setPassenger(passenger);
+                return seat.getData();
+            } else {
+                seat = seat.getNext();
+            }
+        } while (seat.getNext() != null);
+        return null;
+    }
+
+    public void showSeats() {
+        this.seats.display();
     }
 
     @Override

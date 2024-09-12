@@ -50,12 +50,11 @@ public class Seat {
 
     @Override
     public String toString() {
-        return "Seat{" +
+        return "Seat: " +
                 "passenger=" + passenger +
                 ", isSpecial=" + isSpecial +
                 ", typeSeat=" + typeSeat +
-                ", number=" + number +
-                '}';
+                ", number=" + number;
     }
 
     @Override

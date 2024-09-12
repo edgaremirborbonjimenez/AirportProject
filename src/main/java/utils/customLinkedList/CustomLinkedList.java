@@ -47,6 +47,17 @@ public class CustomLinkedList <T>{
         size--;
     }
 
+    public T getIndex(int index){
+        Node<T> node = head;
+        for(int i = 0; i < index-1; i++){
+            if(node.getNext() == null){
+                return null;
+            }
+            node = node.getNext();
+        }
+        return node.getData();
+    }
+
     public void display(){
         if(head != null){
             Node<T> currentNode = head;

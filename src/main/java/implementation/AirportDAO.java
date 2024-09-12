@@ -1,17 +1,8 @@
 package implementation;
 
-import airport.Airplane;
 import airport.Airport;
-import airport.City;
-import airport.Flight;
-import exception.AirportException;
 import interfaces.IAirportDAO;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import utils.Model;
-
-import java.util.List;
-//private static final Logger logger = LogManager.getLogger("Airport");
 
 public class AirportDAO implements IAirportDAO {
 

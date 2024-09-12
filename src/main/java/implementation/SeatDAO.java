@@ -6,6 +6,7 @@ import exception.FlightException;
 import interfaces.ISeatDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import people.Passenger;
 import utils.Model;
 import utils.customLinkedList.Node;
 
@@ -30,27 +31,25 @@ public class SeatDAO implements ISeatDAO {
     }
 
     @Override
-    public Seat asignSeat(Flight flight)throws FlightException {
+    public Seat asignSeat(Flight flight, Passenger p,Seat seat)throws FlightException {
         Flight flightFound = model.findFlight(flight);
 
         if (flightFound == null) {
-            //logger.error("Flight not found");
+            logger.error("Flight not found");
             throw new FlightException("Flight not found");
         }
-        Node<Seat> node = flight.getAirplane().getSeats().getHead();
-        if (node.getData() == null) {
-            //logger.error("No seats available");
-            throw new FlightException("No seats available");
+
+        if(p == null) {
+            logger.error("Passenger not found");
+            throw new FlightException("Passenger not found");
         }
-        do {
-            if (node.getData().getPassenger() == null) {
-                node.getData().setPassenger(model.getPassenger());
-                return node.getData();
-            }
-            node = node.getNext();
-        } while (node.getNext() != null);
-        //logger.error("No seats available");
-        throw new FlightException("No seats available");
+        Seat seatAssigned = flightFound.asignSeat(p,seat.getNumber());
+        if(seatAssigned == null) {
+            logger.error("Couldn't assign seat");
+            throw new FlightException("Couldn't assign seat");
+        }
+        return seatAssigned;
+
     }
 
     @Override
