@@ -36,6 +36,16 @@ public class Airport {
         }
         return null;
     }
+    //Stream
+    public Airplane asignFlightToAirplane(String id,Flight flight) {
+        airplanes.stream().forEach(airplane -> {
+            if (airplane.getId().equals(id)) {
+                flight.setAirplane(airplane);
+                airplane.setFlight(flight);
+            }
+        });
+        return getAirplaneById(id);
+    }
 
     public List<List<Flight>> getRoute(City leaving,City goingTo,int count,int numRec) {
         List<List<Flight>> routes = new LinkedList<>();

@@ -121,14 +121,6 @@ public class Model {
             f.setSeats(seats);
         }
 
-//        for (int i = 0; i < 10;i++) {
-//            Seat s = new Seat();
-//            s.setNumber(i);
-//            s.setSpecial(false);
-//            s.setTypeSeat(TypeSeat.GENERAL);
-//            seats.insert(s);
-//        }
-
         Airplane airplane1 = new Airplane();
         flight1.setAirplane(airplane1);
         airplane1.setFlight(flight1);
@@ -153,12 +145,18 @@ public class Model {
         flight6.setAirplane(airplane7);
         airplane7.setFlight(flight6);
         //airplane7.setSeats(seats);
+        airplane1.setId("1");
+        airplane2.setId("2");
+        airplane3.setId("3");
+        airplane5.setId("4");
+        airplane6.setId("5");
+        airplane7.setId("6");
+        airport.addAirplane(airplane7);
         airport.addAirplane(airplane1);
         airport.addAirplane(airplane2);
         airport.addAirplane(airplane3);
         airport.addAirplane(airplane5);
         airport.addAirplane(airplane6);
-        airport.addAirplane(airplane7);
         passenger = new Passenger();
         passenger.setFirstName("Edgar Emir");
         passenger.setLastName("Borbon Jimenez");

@@ -7,9 +7,13 @@ import interfaces.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import people.Passenger;
+import utils.ECity;
 import utils.Model;
+import utils.Utils;
 import utils.customLinkedList.CustomLinkedList;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -24,6 +28,7 @@ public class Menu {
     private final ITicketDAO ticketDAO;
     private final ISeatDAO seatDAO;
     private final IPassengerDAO passengerDAO;
+    private final IAriplaneDAO airplaneDAO;
     private final Scanner scanner;
     private final Passenger passenger;
     private static final Logger logger = LogManager.getLogger("Airport");
@@ -35,6 +40,7 @@ public class Menu {
         ticketDAO = TicketDAO.getInstance();
         seatDAO = SeatDAO.getInstance();
         passengerDAO = PassengerDAO.getInstance();
+        airplaneDAO = AirplaneDAO.getInstance();
         scanner = new Scanner(System.in);
         passenger = Model.getInstance().getPassenger();
 
@@ -50,7 +56,8 @@ public class Menu {
                 System.out.println("What do you want to do?");
                 System.out.println("1.- Find a flights to go to somewhere");
                 System.out.println("2.- See my tickets");
-                System.out.println("Press 3 to exit");
+                System.out.println("3.- Create a new Flight");
+                System.out.println("Press 4 to exit");
 
 
                 if (scanner.hasNextInt()) {
@@ -63,7 +70,9 @@ public class Menu {
                                 city -> city.getName());
                     } else if (option == 2) {
                         seeMyTickets();
-                    } else if (option == 3) {
+                    } else if(option == 3){
+                        createNewFlight();
+                    } else if (option == 4) {
                         scanner.close();
                         return;
                     } else {
@@ -77,6 +86,135 @@ public class Menu {
             } while (true);
         }catch (Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void createNewFlight() {
+        while (true){
+            System.out.println("Select a leaving place");
+            City leaving = selectPlace();
+            System.out.println("Select destination");
+            City goingTo = selectPlace();
+            if(leaving.getName().equals(goingTo.getName())){
+                System.out.println("Leaving place should defer of destination");
+                continue;
+            }
+            System.out.println("Asign Price");
+            if(!scanner.hasNextDouble()){
+                System.out.println("Please enter a valid price");
+                scanner.next();
+                continue;
+            }
+            double price = scanner.nextDouble();
+            scanner.nextLine();
+
+            System.out.println("Enter leaving date with format mm/dd/yyyy");
+            scanner.hasNextLine();
+            String leavingDateString = scanner.nextLine();
+            if(!Utils.isValidDateFormat(leavingDateString)){
+                System.out.println("Enter a valid leaving date with format mm/dd/yyyy");
+                continue;
+            }
+            System.out.println("Enter arriving date with format mm/dd/yyyy");
+            scanner.hasNextLine();
+            String arrivingDateString = scanner.nextLine();
+            if(!Utils.isValidDateFormat(arrivingDateString)){
+                System.out.println("Enter a valid arriving date with format mm/dd/yyyy");
+                continue;
+            }
+
+            System.out.println("How many General seats will have, enter a number of seats");
+            if(!scanner.hasNextInt()){
+                System.out.println("Please enter a valid number of seats");
+                scanner.next();
+                continue;
+            }
+            int seatsGeneral = scanner.nextInt();
+
+            System.out.println("How many Premium seats will have, enter a number of seats");
+            if(!scanner.hasNextInt()){
+                System.out.println("Please enter a valid number of seats");
+                scanner.next();
+                continue;
+            }
+            int seatsPremium = scanner.nextInt();
+            try{
+                Class<?> flightdao = Class.forName("implementation.FlightDAO");
+                Constructor<?> flightDAOConstructor = flightdao.getDeclaredConstructor();
+                flightDAOConstructor.setAccessible(true);
+                Object flightdaoInstance =flightDAOConstructor.newInstance();
+                Method createFlightMethod = flightdao.getMethod("createFlight",City.class,City.class, double.class, String.class, String.class, int.class, int.class);
+                Object result = (Flight) createFlightMethod.invoke(flightdaoInstance,leaving,goingTo,price,leavingDateString,arrivingDateString,seatsGeneral,seatsPremium);
+                //flightDAO.createFlight(leaving,goingTo,price,leavingDateString,arrivingDateString,seatsGeneral,seatsPremium);
+
+                Airplane airplaneSelected = selectAirplane();
+                airplaneDAO.asignFlightToAirplane(airplaneSelected.getId(),(Flight) result);
+                System.out.println("Flight created successfully");
+                System.out.println((Flight)result);
+                break;
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    //Reflecion
+    public City selectPlace(){
+    try {
+        Class<?> enumClass = Class.forName("utils.ECity");
+        Method valuesMethod = enumClass.getMethod("values");
+        Object[] citiesEnums = (Object []) valuesMethod.invoke(null);
+        while (true){
+            for(int i = 0; i < citiesEnums.length; i++){
+                System.out.println(i+1+".- "+citiesEnums[i]);
+            }
+            if(!scanner.hasNextInt()){
+                System.out.println("Please select a valid option");
+                System.out.println();
+                scanner.next();
+                continue;
+            }
+            int option = scanner.nextInt();
+            if(option>citiesEnums.length || option<=0){
+                System.out.println("Please select a valid option");
+                System.out.println();
+                scanner.next();
+                continue;
+            }
+            return new City((ECity) citiesEnums[option-1]);
+        }
+    }catch (Exception e){
+        System.out.println(e.getMessage());
+    }
+    return null;
+    }
+
+    //Stream
+    public Airplane selectAirplane(){
+        //Airplane[] airplanes =  (Airplane[]) airplaneDAO.getAllAirplanes().toArray();
+        List<Airplane> airplanes = airplaneDAO.getAllAirplanes().stream().toList();
+
+        while (true){
+            int cont = 1;
+            System.out.println("Select airplane");
+            for(Airplane airplane : airplanes){
+                System.out.println(cont+".- "+airplane);
+                cont++;
+            }
+
+            if(!scanner.hasNextInt()){
+                System.out.println("Please select a valid option");
+                System.out.println();
+                scanner.next();
+                continue;
+            }
+            int option = scanner.nextInt();
+            if(option>airplanes.size() || option<=0){
+                System.out.println("Please select a valid option");
+                System.out.println();
+                scanner.next();
+                continue;
+            }
+            return airplanes.get(option-1);
         }
     }
 
@@ -129,9 +267,15 @@ public class Menu {
                     continue;
                 }
 
+                List<List<Flight>> routes = flightDAO.getRoute(cityDAO.getCities().get(leavingOpt - 1),cityDAO.getCities().get(goingToOpt - 1));
+                if(routes.isEmpty()){
+                    System.out.println("There are no flights to your destination");
+                    System.out.println();
+                    break;
+                }
+
                 showRoutes(
-                                flightDAO.getRoute(cityDAO.getCities().get(leavingOpt - 1),
-                                cityDAO.getCities().get(goingToOpt - 1)),
+                                routes,
                                 (opt,flights)->opt>flights.size()||opt<=0,
                                 (opt,flights)->{
                                     System.out.println("You selected the option: "+opt);

@@ -18,8 +18,6 @@ public enum ECity {
 
     @Override
     public String toString() {
-        return "{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

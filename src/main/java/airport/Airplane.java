@@ -11,12 +11,10 @@ import java.util.*;
 public class Airplane {
     private String id;
     private Flight flight;
-    //private CustomLinkedList<Seat> seats;
     private Collection<Stewardess> steward;
     private Collection<Pilot> pilots;
 
     public Airplane() {
-        //this.seats = new CustomLinkedList<>();
         this.steward = new LinkedList<>();
         this.pilots = new ArrayList<>();
     }
@@ -36,13 +34,6 @@ public class Airplane {
         this.flight = flight;
     }
 
-//    public CustomLinkedList<Seat> getSeats() {
-//        return seats;
-//    }
-//
-//    public void setSeats(CustomLinkedList<Seat> seats) {
-//        this.seats = seats;
-//    }
 
     public Collection<Stewardess> getStewardess() {
         return steward;
@@ -60,21 +51,6 @@ public class Airplane {
         this.pilots = pilots;
     }
 
-//    public Seat asignSeat(Passenger passenger, int number) {
-//        if (seats.getHead() == null) {
-//            return null;
-//        }
-//        Node<Seat> seat = seats.getHead();
-//        do {
-//            if (seat.getData().getNumber() == number) {
-//                seat.getData().setPassenger(passenger);
-//                return seat.getData();
-//            } else {
-//                seat = seat.getNext();
-//            }
-//        } while (seat.getNext() != null);
-//        return null;
-//    }
 
     @Override
     public String toString() {
